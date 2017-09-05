@@ -3,10 +3,10 @@
  * @author Maxwell Frederickson
  *
  */
-public class DictionaryTree {
+public class DirectoryTree {
 	private TreeNode root;
 	
-	public DictionaryTree() {
+	public DirectoryTree() {
 		root = null;
 	}
 	
@@ -57,13 +57,13 @@ public class DictionaryTree {
 		private TreeNode left;
 		private TreeNode right;
 		
-		public TreeNode() {
+		private TreeNode() {
 			left = null;
 			right = null;
 			this.entry = null;
 		}
 		
-		public TreeNode(Person newPerson) {
+		private TreeNode(Person newPerson) {
 			left = null;
 			right = null;
 			this.entry = newPerson;
@@ -103,7 +103,8 @@ public class DictionaryTree {
 		
 		Person search(String name) {
 			if ( this.entry.getFullName().toUpperCase().compareTo(name.toUpperCase()) == 0) {
-				System.out.println("Found and returned entry for: " + this.entry.getFullName() );
+				System.out.println("Located the following entry: ");
+				this.entry.printInfo();
 				return this.entry;
 			} else if (name.toUpperCase().compareTo(this.entry.getFullName().toUpperCase()) < 0 ) {
 				if ( left == null ) {
