@@ -9,36 +9,41 @@ public class Person {
 	private String email;
 	private String phone;
 	
+	/**
+	 * 
+	 * @param firstName First Name.
+	 * @param lastName Last Name.
+	 * @param email Email Address.
+	 * @param phone Phone Number: xxx-xxx-xxxx format.
+	 */
 	public Person(String firstName, String lastName, String email, String phone) {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setEmail(email);
 		setPhone(phone);
 		
-	}// end default constructor
-	
-	public Person() {
-		setFirstName(null);
-		setLastName(null);
-		setEmail(null);
-		setPhone(null);
-	}
+	}// MF: end default constructor
 
 	/**
 	 * Concatenates first & last names to a full name.
 	 * @return firstName + ' ' + lastName
+	 * MF
 	 */
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}
 	
+	/**
+	 * Prints out the Name, Email and Phone number to the console.
+	 * MF
+	 */
 	public void printInfo() {
 		System.out.println("Name: " + this.getFullName());
 		System.out.println("Email: " + this.getEmail());
 		System.out.println("Phone: " + this.getPhone());
 	}
 	
-	// setters
+	// MF: setters
 	public void setPhone(String newPhone) {
 		this.phone = newPhone;	
 	}
@@ -55,7 +60,7 @@ public class Person {
 		this.firstName = newFirstName;
 	}
 	
-	// getters
+	// MF: getters
 	
 	public String getFirstName() {
 		return firstName;
