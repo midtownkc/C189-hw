@@ -7,9 +7,9 @@ public class Person {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private int phone;
+	private String phone;
 	
-	public Person(String firstName, String lastName, String email, int phone) {
+	public Person(String firstName, String lastName, String email, String phone) {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setEmail(email);
@@ -21,11 +21,25 @@ public class Person {
 		setFirstName(null);
 		setLastName(null);
 		setEmail(null);
-		setPhone(0);
+		setPhone(null);
 	}
 
+	/**
+	 * Concatenates first & last names to a full name.
+	 * @return firstName + ' ' + lastName
+	 */
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+	
+	public void printInfo() {
+		System.out.println("Name: " + this.getFullName());
+		System.out.println("Email: " + this.getEmail());
+		System.out.println("Phone: " + this.getPhone());
+	}
+	
 	// setters
-	public void setPhone(int newPhone) {
+	public void setPhone(String newPhone) {
 		this.phone = newPhone;	
 	}
 
@@ -51,15 +65,11 @@ public class Person {
 		return lastName;
 	}
 	
-	public String getFullName() {
-		return firstName + " " + lastName;
-	}
-	
 	public String getEmail() {
 		return email;
 	}
 	
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 }
