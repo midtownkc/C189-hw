@@ -186,13 +186,18 @@ public class DirectoryTree {
 				else if(isLeftChild)
 					parent.left = thisNode.left;
 				else parent.right = thisNode.left;
+			} else if (thisNode.left == null) {
+				if (thisNode == root)
+					root = thisNode.right;
+				else if (isLeftChild)
+					parent.left = thisNode.right;
+				else
+					parent.right = thisNode.left;
+			} else {
+				
 			}
 			 
 			
-//			if (this.entry.getFullName().toUpperCase().compareTo(name.toUpperCase()) == 0) {
-//				return true;
-//			}
-			return true;
 		}
 		
 	}
