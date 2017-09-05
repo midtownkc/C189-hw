@@ -11,6 +11,12 @@ public class DirectoryTree {
 		root = null;
 	}
 	
+	/**
+	 * Concatenate input into a name string.
+	 * @param firstName First Name.
+	 * @param lastName Last Name.
+	 * @return name firstName + " " + lastName
+	 */
 	private String full_name(String firstName, String lastName) {
 		String name = firstName + " " + lastName;
 		return name;
@@ -53,6 +59,13 @@ public class DirectoryTree {
 		}
 	}
 	
+	/**
+	 * Delete an entry from the Directory using a person's name.
+	 * @param firstName First name.
+	 * @param lastName Last Name.
+	 * @return true if the entry was deleted.
+	 * MF
+	 */
 	public boolean delete(String firstName, String lastName) {
 		String name = full_name(firstName, lastName);
 		
@@ -108,7 +121,7 @@ public class DirectoryTree {
 			// MF: Update Person Entry for the Phone number if it already exists.
 			if (newPerson.getFullName().compareTo(this.entry.getFullName()) == 0) {
 				this.entry = newPerson;
-				System.out.println("Updated entry for : " + this.entry.getFullName());
+				System.out.println("Updated entry for : " + this.entry.getFullName() + "\n");
 				return true;
 				// MF: Traverse / Add person to the left node if it's less than the current node
 			} else if (newPerson.getFullName().compareTo(this.entry.getFullName()) < 0 ) {
@@ -130,20 +143,30 @@ public class DirectoryTree {
 	
 		}
 		
+		/**
+		 * Search for a person in the directory by name.
+		 * @param name firstName + lastName of person searching for.
+		 * @return Person entry matching the name or null if it's not found.
+		 * MF
+		 */
 		Person search(String name) {
+			// return if it matches MF
 			if ( this.entry.getFullName().toUpperCase().compareTo(name.toUpperCase()) == 0) {
-				System.out.println("Located the following entry: ");
+				System.out.println("\nLocated the following entry: ");
 				this.entry.printInfo();
 				return this.entry;
+				
+				// search left MF
 			} else if (name.toUpperCase().compareTo(this.entry.getFullName().toUpperCase()) < 0 ) {
 				if ( left == null ) {
-					System.out.println("No entry found matching: " + name);
+					System.out.println("No entry found matching: " + name + "\n");
 					return null;
 				} else
 					return left.search(name);
 			} else {
+				// search right MF
 				if (right == null) {
-					System.out.println("No entry found matching: " + name);
+					System.out.println("No entry found matching: " + name + "\n");
 					return null;
 				} else
 					return right.search(name);
@@ -151,54 +174,51 @@ public class DirectoryTree {
 			
 		}
 		
+		/**
+		 * Delete someone from the directory.
+		 * @param name
+		 * @param parentNode
+		 * @return true if the string was deleted.  False if it wasn't found / not deleted.
+		 * MF
+		 */
 		public boolean delete(String name, TreeNode parentNode) {
-			TreeNode thisNode = root;
-			TreeNode parent = root;
-			
-			boolean isLeftChild = true;
-			
-			while (thisNode.entry.getFullName().toUpperCase().compareTo(name.toUpperCase()) != 0) {
-				parent = thisNode;
-				
-				if(thisNode.entry.getFullName().toUpperCase().compareTo(name.toUpperCase()) < 0) {
-					isLeftChild = true;
-					thisNode = thisNode.left;
-				} else {
-					isLeftChild = false;
-					thisNode = thisNode.right;
-				}
-				
-				if (thisNode == null)
+
+			// If the node is less than the entry, traverse left. MF
+			if (name.toUpperCase().compareTo(entry.getFullName().toUpperCase()) < 0) {
+				if (left != null) {
+					return left.delete(name, this);
+				} else 
+					System.out.println("Could not delete: "+ name + " \nIt was not found in the directory.\n");
 					return false;
-			}
-			
-			if (thisNode.left == null && thisNode.right == null) {
-				if (thisNode == root) {
-					root = null;
-				} else if (isLeftChild) {
-				parent.left = null;
-				} else {
-				parent.right = null;
-				}
-			} else if(thisNode.right == null) {
-				if (thisNode == root)
-					root = thisNode.left;
-				else if(isLeftChild)
-					parent.left = thisNode.left;
-				else parent.right = thisNode.left;
-			} else if (thisNode.left == null) {
-				if (thisNode == root)
-					root = thisNode.right;
-				else if (isLeftChild)
-					parent.left = thisNode.right;
-				else
-					parent.right = thisNode.left;
+			// If the node is greater than the entry, traverse right. MF
+			} else if (name.toUpperCase().compareTo(this.entry.getFullName().toUpperCase()) > 0) {
+				if (right != null)
+					return right.delete(name, this);
+				else 
+					System.out.println("Could not delete: "+ name + " \nIt was not found in the directory.\n");
+					return false;
 			} else {
-				
+				if (left != null && right != null) {
+					this.entry = right.lowestPerson();
+					right.delete(this.entry.getFullName().toUpperCase(), this);
+					// delete the entry MF
+				} else if (parentNode.left == this) {
+					parentNode.left = (left != null) ? left : right;
+ 				} else if (parentNode.right == this) {
+ 					parentNode.right = (left != null) ? left: right;
+ 				}
+				System.out.println("Deleted: " + name + " from the directory.\n");
+				return true;
 			}
-			 
-			
+		}// end delete MF
+		
+		// find the person with the lowest entry. MF
+		private Person lowestPerson() {
+			if (left == null)
+				return entry;
+			else
+				return left.lowestPerson();
 		}
 		
-	}
+	} // end TreeNode MF
 }

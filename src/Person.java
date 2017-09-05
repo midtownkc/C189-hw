@@ -40,7 +40,7 @@ public class Person {
 	public void printInfo() {
 		System.out.println("Name: " + this.getFullName());
 		System.out.println("Email: " + this.getEmail());
-		System.out.println("Phone: " + this.getPhone());
+		System.out.println("Phone: " + this.getPhone() + "\n");
 	}
 	
 	// MF: setters
