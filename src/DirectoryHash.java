@@ -17,11 +17,16 @@ public class DirectoryHash {
 		return name;
 	}
 	
-	Person search(String firstName, String lastName) {
-		String name = full_name(firstName, lastName);
-		int hash = (name.hashCode() % directory.length);
+	public int hashinator(String name) {
+		int hash = name.hashCode() % directory.length;
 		if (hash < 0)
 			hash += directory.length;
+		return hash;
+	}
+	
+	Person search(String firstName, String lastName) {
+		String name = full_name(firstName, lastName);
+		int hash = hashinator(name);
 		if (directory[hash] == null) {
 			System.out.println(name + " wasn't found in the directory.\n");
 			return null;
@@ -44,22 +49,16 @@ public class DirectoryHash {
 	
 	public void insert(String firstName, String lastName, String email, String phone) {
 		Person newPerson = new Person(firstName, lastName, email, phone);
-		int hash = (newPerson.getFullName().hashCode() % directory.length);
-		if (hash < 0)
-			hash += directory.length;
+		int hash = hashinator(newPerson.getFullName());
 		if (directory[hash] == null) {
 			System.out.println("Added " + newPerson.getFullName() + " to the directory.");
 			directory[hash] = new hashRecord(newPerson);
 		} else { 
 			hashRecord focusRecord = directory[hash];
-			int i = 10;
-			while (focusRecord.getNext() != null && focusRecord.getPerson().getFullName().hashCode() != newPerson.getFullName().hashCode() && (i > 0)) {
-				System.out.println(focusRecord.getPerson());
-				i--;
-				System.out.println(i);
+			while (focusRecord.getNext() != null && hashinator(focusRecord.getName()) != hashinator(newPerson.getFullName())) {
 				focusRecord.getNext();
 			}
-			if (focusRecord.getPerson().getFullName() == newPerson.getFullName()) {
+			if (focusRecord.getPerson().getFullName().equals(newPerson.getFullName())) {
 				System.out.println("Added " + newPerson.getFullName() + " to the directory.");
 				focusRecord.setValue(newPerson);
 			} else {
@@ -68,15 +67,15 @@ public class DirectoryHash {
 			}
 			
 		}
-		}
+	}
 
 	private class hashRecord {
-		private int key;
+		private String name;
 		private Person person;
 		private hashRecord next;
 		
 		hashRecord(Person person) {
-			this.key = person.getFullName().hashCode();
+			this.name = person.getFullName();
 			this.person = person;
 			this.next = null;
 		}
@@ -91,8 +90,8 @@ public class DirectoryHash {
 			return next;
 		}
 		
-		int getHash() {
-			return key;
+		String getName() {
+			return name;
 		}
 		
 		// setters MF

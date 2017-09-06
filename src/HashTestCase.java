@@ -35,6 +35,11 @@ public class HashTestCase {
 //		
 		phoneHash.search("Jill", "Jones");
 		phoneHash.search("John", "Doe");
+		
+		
+		// my tests
+		
+		phoneHash.search("Testing", "Doesn'twork");
 	}
 
 }

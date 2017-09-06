@@ -6,6 +6,7 @@
 public class Person {
 	private String firstName;
 	private String lastName;
+	private String name;
 	private String email;
 	private String phone;
 	
@@ -21,6 +22,7 @@ public class Person {
 		setLastName(lastName);
 		setEmail(email);
 		setPhone(phone);
+		setName(firstName, lastName);
 		
 	}// MF: end default constructor
 
@@ -29,9 +31,6 @@ public class Person {
 	 * @return firstName + ' ' + lastName
 	 * MF
 	 */
-	public String getFullName() {
-		return firstName + " " + lastName;
-	}
 	
 	/**
 	 * Prints out the Name, Email and Phone number to the console.
@@ -44,6 +43,10 @@ public class Person {
 	}
 	
 	// MF: setters
+	
+	public void setName(String firstName, String lastName) {
+		this.name = firstName + " " + lastName;
+	}
 	public void setPhone(String newPhone) {
 		this.phone = newPhone;	
 	}
@@ -61,6 +64,10 @@ public class Person {
 	}
 	
 	// MF: getters
+	
+	public String getFullName() {
+		return this.name;
+	}
 	
 	public String getFirstName() {
 		return firstName;
