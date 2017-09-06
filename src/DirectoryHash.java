@@ -18,12 +18,56 @@ public class DirectoryHash {
 	}
 	
 	Person search(String firstName, String lastName) {
-		// STUB return person
+		String name = full_name(firstName, lastName);
+		int hash = (name.hashCode() % directory.length);
+		if (hash < 0)
+			hash += directory.length;
+		if (directory[hash] == null) {
+			System.out.println(name + " wasn't found in the directory.\n");
+			return null;
+		} else {
+			hashRecord focusRecord = directory[hash];
+			while ((focusRecord != null) && ((focusRecord.getPerson().getFullName()).hashCode() != name.hashCode())) {
+				focusRecord = focusRecord.getNext();
+			}
+			if (focusRecord == null) {
+				System.out.println(name + " wasn't found in the directory\n");
+				return null;
+			} else {
+				System.out.println("Located the following entry:\n");
+				focusRecord.getPerson().printInfo();
+				return focusRecord.getPerson();
+			}
+				
+		}
 	}
 	
 	public void insert(String firstName, String lastName, String email, String phone) {
 		Person newPerson = new Person(firstName, lastName, email, phone);
-		// STUB FOR REST OF INSERT
+		int hash = (newPerson.getFullName().hashCode() % directory.length);
+		if (hash < 0)
+			hash += directory.length;
+		if (directory[hash] == null) {
+			System.out.println("Added " + newPerson.getFullName() + " to the directory.");
+			directory[hash] = new hashRecord(newPerson);
+		} else { 
+			hashRecord focusRecord = directory[hash];
+			int i = 10;
+			while (focusRecord.getNext() != null && focusRecord.getPerson().getFullName().hashCode() != newPerson.getFullName().hashCode() && (i > 0)) {
+				System.out.println(focusRecord.getPerson());
+				i--;
+				System.out.println(i);
+				focusRecord.getNext();
+			}
+			if (focusRecord.getPerson().getFullName() == newPerson.getFullName()) {
+				System.out.println("Added " + newPerson.getFullName() + " to the directory.");
+				focusRecord.setValue(newPerson);
+			} else {
+				System.out.println("Added " + newPerson.getFullName() + " to the directory.");
+				focusRecord.setNext(new hashRecord(newPerson));
+			}
+			
+		}
 		}
 
 	private class hashRecord {
