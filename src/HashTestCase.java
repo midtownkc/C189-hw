@@ -18,7 +18,7 @@ public class HashTestCase {
 		phoneHash.search("Pat", "Jones");
 		phoneHash.search("Billy", "Kidd");
 
-//		phoneHash.delete("John", "Doe");
+		phoneHash.delete("John", "Doe");
 		
 		phoneHash.insert("Test", "Case", "Test_Case@testcase.com", "555-235-1121");
 		phoneHash.insert("Nadezhda", "Kanachekhovskaya", "dr.nadezhda.kanacheckovskaya@somehospital.moscow.ci.ru", "555-235-1122"); 
@@ -29,17 +29,12 @@ public class HashTestCase {
 		 
 		phoneHash.search("Jack", "Jones");
 		phoneHash.search("Nadezhda", "Kanachekhovskaya");
-//		
-//		phoneHash.delete("Jill", "Jones");
-//		phoneHash.delete("John", "Doe");
-//		
+
+		phoneHash.delete("Jill", "Jones");
+		phoneHash.delete("John", "Doe");
+
 		phoneHash.search("Jill", "Jones");
 		phoneHash.search("John", "Doe");
-		
-		
-		// my tests
-		
-		phoneHash.search("Testing", "Doesn'twork");
 	}
 
 }
